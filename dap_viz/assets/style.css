@@ -1,0 +1,23 @@
+body {
+  background: #fcfcfb;
+}
+
+.raw-value {
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: #f3f2ef;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.detail-card {
+  height: 72vh;
+  overflow-y: auto;
+}
+
+.ag-theme-alpine {
+  --ag-font-size: 12px;
+}
