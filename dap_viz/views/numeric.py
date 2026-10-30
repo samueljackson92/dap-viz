@@ -9,7 +9,7 @@ from dash import Dash, Input, Output, dcc, html
 
 from dap_viz.classify import Category
 from dap_viz.views import figures
-from dap_viz.views.common import PRIMARY, empty_figure, options
+from dap_viz.views.common import loading, PRIMARY, empty_figure, options
 
 
 def numeric_rows(frame: pd.DataFrame) -> pd.DataFrame:
@@ -106,10 +106,10 @@ def layout(frame: pd.DataFrame) -> html.Div:
             dbc.Row(
                 [
                     dbc.Col(
-                        dcc.Graph(id="nu-family-graph", style={"height": "480px"}), lg=7
+                        loading(dcc.Graph(id="nu-family-graph", style={"height": "480px"})), lg=7
                     ),
                     dbc.Col(
-                        dcc.Graph(id="nu-histogram", style={"height": "480px"}), lg=5
+                        loading(dcc.Graph(id="nu-histogram", style={"height": "480px"})), lg=5
                     ),
                 ]
             ),

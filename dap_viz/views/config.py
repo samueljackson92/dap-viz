@@ -14,7 +14,7 @@ from dap_viz.classify import (
     parse_typed_list,
 )
 from dap_viz.views import figures
-from dap_viz.views.common import PRIMARY, SEQUENTIAL, empty_figure, options
+from dap_viz.views.common import loading, PRIMARY, SEQUENTIAL, empty_figure, options
 
 
 def config_table(frame: pd.DataFrame, family: str) -> pd.DataFrame:
@@ -118,7 +118,7 @@ def layout(frame: pd.DataFrame) -> html.Div:
                 style={"height": "380px"},
                 className="ag-theme-alpine",
             ),
-            dcc.Graph(id="cf-field-graph", style={"height": "400px"}),
+            loading(dcc.Graph(id="cf-field-graph", style={"height": "400px"})),
             html.H5(f"Typed lists ({len(lists)} keys)", className="mt-4"),
             dcc.Dropdown(
                 id="cf-list-family",
@@ -126,7 +126,7 @@ def layout(frame: pd.DataFrame) -> html.Div:
                 value=list_families.index[0] if len(list_families) else None,
                 clearable=False,
             ),
-            dcc.Graph(id="cf-list-graph", style={"height": "560px"}),
+            loading(dcc.Graph(id="cf-list-graph", style={"height": "560px"})),
         ]
     )
 

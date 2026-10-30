@@ -58,6 +58,17 @@ pio.templates.default = "dap"
 GRAPH_CONFIG: Any = {"displaylogo": False, "toImageButtonOptions": {"format": "svg"}}
 
 
+def loading(*children: Any) -> dcc.Loading:
+    """Show a spinner over the children while a callback makes their data."""
+    return dcc.Loading(
+        list(children),
+        type="circle",
+        color=PRIMARY,
+        delay_show=200,
+        overlay_style={"visibility": "visible", "opacity": 0.4},
+    )
+
+
 def graph(figure: go.Figure, height: int = 400, **kwargs) -> dcc.Graph:
     """Make a dcc.Graph with the shared configuration."""
     figure.update_layout(height=height)
@@ -110,3 +121,21 @@ def pre(text: str) -> html.Pre:
 def to_json(value: object) -> str:
     """Format an object as indented JSON for display."""
     return json.dumps(value, indent=2, default=str)
+
+
+# Category groups for colour. Eight groups fit the categorical palette, so
+# each group keeps one fixed colour. "Empty" is neutral grey: it has no data.
+NEUTRAL = "#b4b2a9"
+CATEGORY_GROUPS: list[tuple[str, str, tuple[str, ...]]] = [
+    ("Numeric", SERIES[0], ("numeric", "numeric_array")),
+    ("Categorical", SERIES[1], ("categorical",)),
+    ("Text & names", SERIES[2], ("text", "identifier")),
+    ("Paths & references", SERIES[3], ("filepath", "signal_path", "waveform_ref")),
+    ("DSL", SERIES[4], ("dsl_waveform", "dsl_config", "dsl_typed_list", "dsl_timer")),
+    ("Date & hex", SERIES[5], ("datetime", "hex")),
+    ("Error", SERIES[7], ("error",)),
+    ("Empty", NEUTRAL, ("empty",)),
+]
+GROUP_OF = {c: name for name, _, cats in CATEGORY_GROUPS for c in cats}
+GROUP_COLOR = {name: color for name, color, _ in CATEGORY_GROUPS}
+CATEGORY_COLOR = {c: GROUP_COLOR[GROUP_OF[c]] for c in GROUP_OF}

@@ -45,9 +45,7 @@ def create_app(frame: pd.DataFrame, pulse: int | None = None, source: str = "") 
         [
             html.Div(
                 [
-                    html.H3(
-                        f"JET DAP viewer — pulse {pulse}" if pulse else "JET DAP viewer"
-                    ),
+                    html.H3(f"DAP Viz — pulse {pulse}" if pulse else "JET DAP viewer"),
                     html.Div(source, className="text-muted small font-monospace"),
                 ],
                 className="my-3",

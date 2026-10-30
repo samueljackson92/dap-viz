@@ -3,43 +3,13 @@
 import dash_ag_grid as dag
 import dash_bootstrap_components as dbc
 import pandas as pd
-import plotly.graph_objects as go
 from dash import Dash, Input, Output, dcc, html
 
 from dap_viz.classify import Category
 from dap_viz.views import figures
-from dap_viz.views.common import SEQUENTIAL, graph, options
+from dap_viz.views.common import graph, options
 
-TOP_VALUES = 25
-TOP_SYSTEMS = 25
 TEXT_CATEGORIES = [str(Category.TEXT), str(Category.IDENTIFIER), str(Category.DATETIME)]
-
-
-def value_system_heatmap(rows: pd.DataFrame) -> go.Figure:
-    values = rows["value"].str.strip()
-    top_values = values.value_counts().head(TOP_VALUES).index
-    top_systems = rows["system"].value_counts().head(TOP_SYSTEMS).index
-    keep = values.isin(top_values) & rows["system"].isin(top_systems)
-    table = pd.crosstab(values[keep], rows.loc[keep, "system"]).reindex(
-        index=top_values, columns=top_systems, fill_value=0
-    )
-    figure = go.Figure(
-        go.Heatmap(
-            z=table.values.astype(float),
-            x=list(table.columns),
-            y=list(table.index),
-            colorscale=SEQUENTIAL,
-            xgap=2,
-            ygap=2,
-            hovertemplate="value %{y}<br>system %{x}<br>%{z} keys<extra></extra>",
-        )
-    )
-    figure.update_layout(
-        title=f"Most common {TOP_VALUES} labels in the {TOP_SYSTEMS} systems that use labels most",
-        yaxis={"autorange": "reversed", "type": "category", "automargin": True},
-        xaxis={"type": "category"},
-    )
-    return figure
 
 
 def layout(frame: pd.DataFrame) -> html.Div:
@@ -79,7 +49,6 @@ def layout(frame: pd.DataFrame) -> html.Div:
                     ),
                 ]
             ),
-            graph(value_system_heatmap(labels), 640),
             html.H5(
                 f"Text, identifiers and dates ({len(texts):,} keys)", className="mt-3"
             ),

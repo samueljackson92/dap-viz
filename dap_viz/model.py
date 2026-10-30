@@ -82,7 +82,7 @@ def _refine_strings(frame: pd.DataFrame) -> None:
     ]
     single_word = ~stripped.str.contains(r"\s", regex=True)
     frame.loc[mask, "category"] = np.select(
-        [np.array(categorical), single_word.to_numpy()],
+        [np.array(categorical, dtype=bool), single_word.to_numpy()],
         [str(Category.CATEGORICAL), str(Category.IDENTIFIER)],
         default=str(Category.TEXT),
     )

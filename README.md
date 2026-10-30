@@ -45,7 +45,7 @@ A key family is the key with each number in the name changed to `#`. For example
 
 ## Tabs
 
-- **Overview**: counts by category and by system.
+- **Overview**: counts by system and by category. The bar chart shows the 30 largest systems. The colour of each bar segment shows the category. The treemap has three levels: system, category and key family. Click a bar segment or a treemap box to list the keys of that group in the panel below. Click a key to see its details. You can also select the group with the dropdowns.
 - **Explorer**: a grid of all keys. Filter by category, system or regular expression. Click a row to see the details and a plot for that category.
 - **Numerics**: plot a numeric family (a bar chart for one index, a heatmap for two or more) and the distribution of values in a system.
 - **Categorical & text**: label counts and a list of text values.
